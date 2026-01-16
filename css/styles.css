@@ -1,0 +1,462 @@
+/* ===================================
+   Purrfect Kittens - Stylesheet
+   Cute & Playful Design
+   =================================== */
+
+/* CSS Variables */
+:root {
+    --color-primary: #FFB6C1;      /* Soft pink */
+    --color-secondary: #E6E6FA;     /* Lavender */
+    --color-accent: #98FB98;        /* Mint green */
+    --color-background: #FFF8F0;    /* Light cream */
+    --color-text: #4A4A4A;          /* Soft charcoal */
+    --color-white: #FFFFFF;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    
+    --font-heading: 'Fredoka One', cursive;
+    --font-body: 'Nunito', sans-serif;
+    
+    --radius-small: 12px;
+    --radius-medium: 20px;
+    --radius-large: 30px;
+    
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
+    
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    background: linear-gradient(135deg, var(--color-background) 0%, var(--color-secondary) 100%);
+    color: var(--color-text);
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Container */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 20px 0 30px;
+}
+
+.title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    text-shadow: 2px 2px 0 var(--color-white), 4px 4px 0 rgba(255, 182, 193, 0.3);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.title .paw {
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.title .paw:last-child {
+    animation-delay: 0.3s;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text);
+    opacity: 0.8;
+    font-weight: 600;
+}
+
+/* Main Content */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Kitten Card */
+.kitten-card {
+    background: var(--color-white);
+    border-radius: var(--radius-large);
+    padding: 15px;
+    box-shadow: var(--shadow-medium);
+    width: 100%;
+    max-width: 450px;
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.kitten-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    border-radius: var(--radius-medium);
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kitten-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: var(--radius-medium);
+    transition: opacity var(--transition-medium);
+}
+
+.kitten-image.loading {
+    opacity: 0;
+}
+
+/* Loader */
+.loader {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    color: var(--color-text);
+}
+
+.loader.hidden {
+    display: none;
+}
+
+.paw-prints {
+    display: flex;
+    gap: 10px;
+    font-size: 2rem;
+}
+
+.paw-prints span {
+    animation: pawBounce 1.4s ease-in-out infinite;
+}
+
+.paw-prints span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.paw-prints span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.loader p {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Fact Container */
+.fact-container {
+    width: 100%;
+    max-width: 450px;
+}
+
+.fact-card {
+    background: var(--color-white);
+    border-radius: var(--radius-medium);
+    padding: 20px 25px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border-left: 4px solid var(--color-accent);
+    transition: transform var(--transition-fast);
+}
+
+.fact-card:hover {
+    transform: scale(1.02);
+}
+
+.fact-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.fact-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-text);
+}
+
+/* Button */
+.show-another-btn {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #FF9AAC 100%);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-large);
+    padding: 18px 40px;
+    cursor: pointer;
+    box-shadow: var(--shadow-medium);
+    transition: all var(--transition-medium);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.show-another-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-hover);
+    background: linear-gradient(135deg, #FF9AAC 0%, var(--color-primary) 100%);
+}
+
+.show-another-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.show-another-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-paw {
+    font-size: 1.2rem;
+    transition: transform var(--transition-fast);
+}
+
+.show-another-btn:hover .btn-paw {
+    animation: wiggle 0.5s ease-in-out;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 30px 0 20px;
+    color: var(--color-text);
+    opacity: 0.8;
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+.heart {
+    display: inline-block;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.counter {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+#counter {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+}
+
+/* Decorative Paw Prints */
+.decoration {
+    position: fixed;
+    font-size: 3rem;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+    animation: float 6s ease-in-out infinite;
+}
+
+.paw-1 {
+    top: 10%;
+    left: 5%;
+    transform: rotate(-30deg);
+    animation-delay: 0s;
+}
+
+.paw-2 {
+    top: 30%;
+    right: 8%;
+    transform: rotate(25deg);
+    animation-delay: 1.5s;
+}
+
+.paw-3 {
+    bottom: 25%;
+    left: 8%;
+    transform: rotate(15deg);
+    animation-delay: 3s;
+}
+
+.paw-4 {
+    bottom: 10%;
+    right: 5%;
+    transform: rotate(-20deg);
+    animation-delay: 4.5s;
+}
+
+/* Animations */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes pawBounce {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-15px) scale(1.1);
+        opacity: 0.7;
+    }
+}
+
+@keyframes wiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-15deg);
+    }
+    75% {
+        transform: rotate(15deg);
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(var(--rotation, 0deg));
+    }
+    50% {
+        transform: translateY(-20px) rotate(var(--rotation, 0deg));
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade in animation class */
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .show-another-btn {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+    }
+    
+    .image-container {
+        min-height: 250px;
+    }
+    
+    .decoration {
+        font-size: 2rem;
+    }
+    
+    .fact-card {
+        padding: 15px 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 40px 20px;
+    }
+    
+    .title {
+        font-size: 3rem;
+    }
+    
+    .kitten-card {
+        padding: 20px;
+    }
+    
+    .image-container {
+        min-height: 350px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for accessibility */
+.show-another-btn:focus {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+.show-another-btn:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.show-another-btn:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
