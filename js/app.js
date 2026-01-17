@@ -64,12 +64,6 @@ const catFacts = [
 ];
 
 // ===================================
-// Configuration
-// ===================================
-const NUM_KITTENS = 3;
-const CAT_API_URL = 'https://api.thecatapi.com/v1/images/search?size=med&limit=' + NUM_KITTENS;
-
-// ===================================
 // DOM Elements
 // ===================================
 const kittenImages = [
@@ -92,6 +86,11 @@ const counterElement = document.getElementById('counter');
 let kittenCount = 0;
 let isLoading = false;
 let lastFactIndex = -1;
+
+// ===================================
+// API Configuration
+// ===================================
+const CAT_API_URL = 'https://api.thecatapi.com/v1/images/search?size=med&limit=3';
 
 // ===================================
 // Functions
@@ -132,16 +131,25 @@ function hideLoader(index) {
  * Show all loaders
  */
 function showAllLoaders() {
-    for (let i = 0; i < NUM_KITTENS; i++) {
+    for (let i = 0; i < 3; i++) {
         showLoader(i);
     }
 }
 
 /**
- * Update the kitten counter
+ * Hide all loaders
+ */
+function hideAllLoaders() {
+    for (let i = 0; i < 3; i++) {
+        hideLoader(i);
+    }
+}
+
+/**
+ * Update the kitten counter (adds 3 for each button press)
  */
 function updateCounter() {
-    kittenCount += NUM_KITTENS;
+    kittenCount += 3;
     counterElement.textContent = kittenCount;
     
     // Save to localStorage for persistence
@@ -181,40 +189,7 @@ function displayFact() {
 }
 
 /**
- * Load a single kitten image
- */
-function loadKittenImage(index, url) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        
-        img.onload = () => {
-            kittenImages[index].src = url;
-            kittenImages[index].alt = 'An adorable kitten';
-            hideLoader(index);
-            
-            // Add fade-in animation
-            kittenImages[index].classList.add('fade-in');
-            setTimeout(() => {
-                kittenImages[index].classList.remove('fade-in');
-            }, 500);
-            
-            resolve(true);
-        };
-        
-        img.onerror = () => {
-            // Use fallback
-            kittenImages[index].src = `https://placekitten.com/${280 + index * 10}/${280 + index * 10}`;
-            kittenImages[index].alt = 'A cute placeholder kitten';
-            hideLoader(index);
-            resolve(false);
-        };
-        
-        img.src = url;
-    });
-}
-
-/**
- * Fetch and display new kitten images
+ * Fetch and display 3 new kitten images
  */
 async function fetchKittens() {
     if (isLoading) return;
@@ -232,15 +207,53 @@ async function fetchKittens() {
         
         const data = await response.json();
         
-        if (data && data.length >= NUM_KITTENS) {
-            // Load all images in parallel
-            const loadPromises = data.slice(0, NUM_KITTENS).map((cat, index) => 
-                loadKittenImage(index, cat.url)
-            );
+        if (data && data.length >= 3) {
+            // Track how many images have loaded
+            let loadedCount = 0;
             
-            await Promise.all(loadPromises);
-            updateCounter();
-            displayFact();
+            // Load all 3 images
+            data.forEach((catData, index) => {
+                if (index >= 3) return; // Only process first 3
+                
+                const img = new Image();
+                
+                img.onload = () => {
+                    kittenImages[index].src = catData.url;
+                    kittenImages[index].alt = 'An adorable kitten';
+                    hideLoader(index);
+                    
+                    // Add fade-in animation
+                    kittenImages[index].classList.add('fade-in');
+                    setTimeout(() => {
+                        kittenImages[index].classList.remove('fade-in');
+                    }, 500);
+                    
+                    loadedCount++;
+                    
+                    // When all 3 are loaded, update counter and re-enable button
+                    if (loadedCount === 3) {
+                        updateCounter();
+                        displayFact();
+                        isLoading = false;
+                        showAnotherBtn.disabled = false;
+                    }
+                };
+                
+                img.onerror = () => {
+                    // Use fallback for this image
+                    kittenImages[index].src = `https://placekitten.com/${300 + index * 10}/${300 + index * 10}`;
+                    kittenImages[index].alt = 'A cute placeholder kitten';
+                    hideLoader(index);
+                    
+                    loadedCount++;
+                    if (loadedCount === 3) {
+                        isLoading = false;
+                        showAnotherBtn.disabled = false;
+                    }
+                };
+                
+                img.src = catData.url;
+            });
         } else {
             throw new Error('Not enough kittens found');
         }
@@ -250,16 +263,16 @@ async function fetchKittens() {
         // Show error state with fallbacks
         factText.textContent = "Oops! Couldn't fetch kittens. Please try again! 😿";
         
-        // Use fallback placeholders
-        for (let i = 0; i < NUM_KITTENS; i++) {
-            kittenImages[i].src = `https://placekitten.com/${280 + i * 20}/${280 + i * 20}`;
+        // Use fallback placeholders for all 3
+        for (let i = 0; i < 3; i++) {
+            kittenImages[i].src = `https://placekitten.com/${300 + i * 20}/${300 + i * 20}`;
             kittenImages[i].alt = 'A cute placeholder kitten';
             hideLoader(i);
         }
+        
+        isLoading = false;
+        showAnotherBtn.disabled = false;
     }
-    
-    isLoading = false;
-    showAnotherBtn.disabled = false;
 }
 
 /**
@@ -283,7 +296,7 @@ function init() {
         }
     });
     
-    // Fetch the first set of kittens
+    // Fetch the first 3 kittens
     fetchKittens();
     
     console.log('🐱 Purrfect Kittens initialized! Press Space or click the button for more kittens!');

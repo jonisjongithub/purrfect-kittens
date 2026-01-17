@@ -51,7 +51,7 @@ body {
 
 /* Container */
 .container {
-    max-width: 600px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
     min-height: 100vh;
@@ -102,16 +102,25 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 25px;
+    width: 100%;
+}
+
+/* Kittens Grid */
+.kittens-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
 }
 
 /* Kitten Card */
 .kitten-card {
     background: var(--color-white);
     border-radius: var(--radius-large);
-    padding: 15px;
+    padding: 12px;
     box-shadow: var(--shadow-medium);
     width: 100%;
-    max-width: 450px;
     transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
@@ -123,7 +132,8 @@ body {
 .image-container {
     position: relative;
     width: 100%;
-    min-height: 300px;
+    min-height: 200px;
+    aspect-ratio: 1 / 1;
     border-radius: var(--radius-medium);
     overflow: hidden;
     background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
@@ -134,8 +144,7 @@ body {
 
 .kitten-image {
     width: 100%;
-    height: auto;
-    max-height: 400px;
+    height: 100%;
     object-fit: cover;
     border-radius: var(--radius-medium);
     transition: opacity var(--transition-medium);
@@ -185,7 +194,7 @@ body {
 /* Fact Container */
 .fact-container {
     width: 100%;
-    max-width: 900px;
+    max-width: 450px;
 }
 
 .fact-card {
@@ -213,7 +222,6 @@ body {
     font-size: 1rem;
     line-height: 1.5;
     color: var(--color-text);
-    transition: opacity var(--transition-fast);
 }
 
 /* Button */
@@ -398,6 +406,31 @@ body {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
+    
+    .title {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .show-another-btn {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+    }
+    
+    .image-container {
+        min-height: 150px;
+    }
+    
+    .decoration {
+        font-size: 2rem;
+    }
+    
+    .fact-card {
+        padding: 15px 20px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -411,29 +444,12 @@ body {
         font-size: 1.8rem;
     }
     
-    .subtitle {
-        font-size: 1rem;
-    }
-    
-    .show-another-btn {
-        font-size: 1.1rem;
-        padding: 15px 30px;
-    }
-    
     .image-container {
-        min-height: 250px;
-    }
-    
-    .decoration {
-        font-size: 2rem;
-    }
-    
-    .fact-card {
-        padding: 15px 20px;
+        min-height: 200px;
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
     .container {
         padding: 40px 20px;
     }
@@ -443,11 +459,11 @@ body {
     }
     
     .kitten-card {
-        padding: 20px;
+        padding: 15px;
     }
     
     .image-container {
-        min-height: 350px;
+        min-height: 200px;
     }
 }
 
@@ -467,15 +483,6 @@ body {
 }
 
 .show-another-btn:focus:not(:focus-visible) {
-    outline: none;
-}
-
-.show-another-btn:focus-visible {
-    outline: 3px solid var(--color-accent);
-    outline-offset: 3px;
-}
-
-cus:not(:focus-visible) {
     outline: none;
 }
 
