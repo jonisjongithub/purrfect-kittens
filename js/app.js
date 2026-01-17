@@ -79,6 +79,7 @@ const loaders = [
 const factText = document.getElementById('factText');
 const showAnotherBtn = document.getElementById('showAnotherBtn');
 const counterElement = document.getElementById('counter');
+const themeToggle = document.getElementById('themeToggle');
 
 // ===================================
 // State
@@ -86,6 +87,7 @@ const counterElement = document.getElementById('counter');
 let kittenCount = 0;
 let isLoading = false;
 let lastFactIndex = -1;
+let isDarkMode = false;
 
 // ===================================
 // API Configuration
@@ -172,6 +174,65 @@ function loadCounter() {
         }
     } catch (e) {
         // localStorage might not be available
+    }
+}
+
+// ===================================
+// Theme Functions
+// ===================================
+
+/**
+ * Set the theme (light or dark)
+ */
+function setTheme(theme) {
+    if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        isDarkMode = true;
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        isDarkMode = false;
+    }
+    
+    // Save preference
+    try {
+        localStorage.setItem('purrfectKittensTheme', theme);
+    } catch (e) {
+        // localStorage might not be available
+    }
+}
+
+/**
+ * Toggle between light and dark themes
+ */
+function toggleTheme() {
+    if (isDarkMode) {
+        setTheme('light');
+    } else {
+        setTheme('dark');
+    }
+}
+
+/**
+ * Load saved theme preference or detect system preference
+ */
+function loadTheme() {
+    try {
+        const savedTheme = localStorage.getItem('purrfectKittensTheme');
+        
+        if (savedTheme) {
+            // Use saved preference
+            setTheme(savedTheme);
+        } else {
+            // Check system preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        }
+    } catch (e) {
+        // Default to light theme
+        setTheme('light');
     }
 }
 
@@ -279,27 +340,51 @@ async function fetchKittens() {
  * Initialize the application
  */
 function init() {
+    // Load saved theme
+    loadTheme();
+    
     // Load saved counter
     loadCounter();
     
-    // Add click event listener
+    // Add click event listener for kittens button
     showAnotherBtn.addEventListener('click', fetchKittens);
+    
+    // Add click event listener for theme toggle
+    themeToggle.addEventListener('click', toggleTheme);
     
     // Add keyboard support
     document.addEventListener('keydown', (e) => {
+        // Space or Enter for new kittens
         if (e.code === 'Space' || e.code === 'Enter') {
-            if (document.activeElement === showAnotherBtn) {
+            if (document.activeElement === showAnotherBtn || document.activeElement === themeToggle) {
                 return; // Let the button handle it
             }
             e.preventDefault();
             fetchKittens();
         }
+        
+        // 'D' key to toggle dark mode
+        if (e.code === 'KeyD' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+            if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                toggleTheme();
+            }
+        }
     });
+    
+    // Listen for system theme changes
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            // Only auto-switch if user hasn't set a preference
+            if (!localStorage.getItem('purrfectKittensTheme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    }
     
     // Fetch the first 3 kittens
     fetchKittens();
     
-    console.log('🐱 Purrfect Kittens initialized! Press Space or click the button for more kittens!');
+    console.log('🐱 Purrfect Kittens initialized! Press Space for more kittens, D to toggle dark mode!');
 }
 
 // ===================================

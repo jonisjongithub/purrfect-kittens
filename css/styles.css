@@ -3,14 +3,16 @@
    Cute & Playful Design
    =================================== */
 
-/* CSS Variables */
+/* CSS Variables - Light Theme (Default) */
 :root {
     --color-primary: #FFB6C1;      /* Soft pink */
     --color-secondary: #E6E6FA;     /* Lavender */
     --color-accent: #98FB98;        /* Mint green */
     --color-background: #FFF8F0;    /* Light cream */
+    --color-background-end: #E6E6FA; /* Gradient end */
     --color-text: #4A4A4A;          /* Soft charcoal */
     --color-white: #FFFFFF;
+    --color-card: #FFFFFF;
     --color-shadow: rgba(0, 0, 0, 0.1);
     
     --font-heading: 'Fredoka One', cursive;
@@ -29,6 +31,23 @@
     --transition-slow: 0.5s ease;
 }
 
+/* Dark Theme */
+[data-theme="dark"] {
+    --color-primary: #FF8FA3;      /* Brighter pink for dark mode */
+    --color-secondary: #3D3D5C;     /* Dark purple */
+    --color-accent: #7ED99A;        /* Brighter mint */
+    --color-background: #1A1A2E;    /* Deep navy */
+    --color-background-end: #2D2D44; /* Gradient end */
+    --color-text: #E8E8E8;          /* Light gray */
+    --color-white: #FFFFFF;
+    --color-card: #2D2D44;          /* Card background */
+    --color-shadow: rgba(0, 0, 0, 0.3);
+    
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.2);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.25);
+    --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
 /* Reset & Base */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -42,11 +61,12 @@ html {
 
 body {
     font-family: var(--font-body);
-    background: linear-gradient(135deg, var(--color-background) 0%, var(--color-secondary) 100%);
+    background: linear-gradient(135deg, var(--color-background) 0%, var(--color-background-end) 100%);
     color: var(--color-text);
     min-height: 100vh;
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background var(--transition-medium), color var(--transition-medium);
 }
 
 /* Container */
@@ -65,6 +85,63 @@ body {
 .header {
     text-align: center;
     padding: 20px 0 30px;
+    position: relative;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background: var(--color-card);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-medium);
+    overflow: hidden;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: var(--shadow-medium);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-icon {
+    font-size: 1.5rem;
+    position: absolute;
+    transition: all var(--transition-medium);
+}
+
+/* Light mode: show sun, hide moon */
+.theme-icon.sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.theme-icon.moon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+/* Dark mode: show moon, hide sun */
+[data-theme="dark"] .theme-icon.sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+
+[data-theme="dark"] .theme-icon.moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
 }
 
 .title {
@@ -116,12 +193,12 @@ body {
 
 /* Kitten Card */
 .kitten-card {
-    background: var(--color-white);
+    background: var(--color-card);
     border-radius: var(--radius-large);
     padding: 12px;
     box-shadow: var(--shadow-medium);
     width: 100%;
-    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium), background var(--transition-medium);
 }
 
 .kitten-card:hover {
@@ -194,11 +271,11 @@ body {
 /* Fact Container */
 .fact-container {
     width: 100%;
-    max-width: 450px;
+    max-width: 900px;
 }
 
 .fact-card {
-    background: var(--color-white);
+    background: var(--color-card);
     border-radius: var(--radius-medium);
     padding: 20px 25px;
     box-shadow: var(--shadow-soft);
@@ -206,7 +283,7 @@ body {
     align-items: flex-start;
     gap: 12px;
     border-left: 4px solid var(--color-accent);
-    transition: transform var(--transition-fast);
+    transition: transform var(--transition-fast), background var(--transition-medium);
 }
 
 .fact-card:hover {
