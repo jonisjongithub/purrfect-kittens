@@ -51,7 +51,7 @@ body {
 
 /* Container */
 .container {
-    max-width: 600px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
     min-height: 100vh;
@@ -102,16 +102,25 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 25px;
+    width: 100%;
+}
+
+/* Kittens Grid */
+.kittens-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
 }
 
 /* Kitten Card */
 .kitten-card {
     background: var(--color-white);
     border-radius: var(--radius-large);
-    padding: 15px;
+    padding: 12px;
     box-shadow: var(--shadow-medium);
     width: 100%;
-    max-width: 450px;
     transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
@@ -123,7 +132,8 @@ body {
 .image-container {
     position: relative;
     width: 100%;
-    min-height: 300px;
+    min-height: 200px;
+    aspect-ratio: 1 / 1;
     border-radius: var(--radius-medium);
     overflow: hidden;
     background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
@@ -134,8 +144,7 @@ body {
 
 .kitten-image {
     width: 100%;
-    height: auto;
-    max-height: 400px;
+    height: 100%;
     object-fit: cover;
     border-radius: var(--radius-medium);
     transition: opacity var(--transition-medium);
@@ -392,9 +401,14 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+    .kittens-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
     .title {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
     
     .subtitle {
@@ -407,7 +421,7 @@ body {
     }
     
     .image-container {
-        min-height: 250px;
+        min-height: 150px;
     }
     
     .decoration {
@@ -419,7 +433,23 @@ body {
     }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 480px) {
+    .kittens-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        max-width: 300px;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .image-container {
+        min-height: 200px;
+    }
+}
+
+@media (min-width: 769px) {
     .container {
         padding: 40px 20px;
     }
@@ -429,11 +459,11 @@ body {
     }
     
     .kitten-card {
-        padding: 20px;
+        padding: 15px;
     }
     
     .image-container {
-        min-height: 350px;
+        min-height: 200px;
     }
 }
 

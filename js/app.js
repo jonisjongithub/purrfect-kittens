@@ -66,8 +66,16 @@ const catFacts = [
 // ===================================
 // DOM Elements
 // ===================================
-const kittenImage = document.getElementById('kittenImage');
-const loader = document.getElementById('loader');
+const kittenImages = [
+    document.getElementById('kittenImage1'),
+    document.getElementById('kittenImage2'),
+    document.getElementById('kittenImage3')
+];
+const loaders = [
+    document.getElementById('loader1'),
+    document.getElementById('loader2'),
+    document.getElementById('loader3')
+];
 const factText = document.getElementById('factText');
 const showAnotherBtn = document.getElementById('showAnotherBtn');
 const counterElement = document.getElementById('counter');
@@ -82,7 +90,7 @@ let lastFactIndex = -1;
 // ===================================
 // API Configuration
 // ===================================
-const CAT_API_URL = 'https://api.thecatapi.com/v1/images/search?size=med';
+const CAT_API_URL = 'https://api.thecatapi.com/v1/images/search?size=med&limit=3';
 
 // ===================================
 // Functions
@@ -102,28 +110,46 @@ function getRandomFact() {
 }
 
 /**
- * Show the loading state
+ * Show the loading state for a specific kitten
  */
-function showLoader() {
-    loader.classList.remove('hidden');
-    kittenImage.style.display = 'none';
-    kittenImage.classList.add('loading');
+function showLoader(index) {
+    loaders[index].classList.remove('hidden');
+    kittenImages[index].style.display = 'none';
+    kittenImages[index].classList.add('loading');
 }
 
 /**
- * Hide the loading state
+ * Hide the loading state for a specific kitten
  */
-function hideLoader() {
-    loader.classList.add('hidden');
-    kittenImage.style.display = 'block';
-    kittenImage.classList.remove('loading');
+function hideLoader(index) {
+    loaders[index].classList.add('hidden');
+    kittenImages[index].style.display = 'block';
+    kittenImages[index].classList.remove('loading');
 }
 
 /**
- * Update the kitten counter
+ * Show all loaders
+ */
+function showAllLoaders() {
+    for (let i = 0; i < 3; i++) {
+        showLoader(i);
+    }
+}
+
+/**
+ * Hide all loaders
+ */
+function hideAllLoaders() {
+    for (let i = 0; i < 3; i++) {
+        hideLoader(i);
+    }
+}
+
+/**
+ * Update the kitten counter (adds 3 for each button press)
  */
 function updateCounter() {
-    kittenCount++;
+    kittenCount += 3;
     counterElement.textContent = kittenCount;
     
     // Save to localStorage for persistence
@@ -163,62 +189,86 @@ function displayFact() {
 }
 
 /**
- * Fetch and display a new kitten image
+ * Fetch and display 3 new kitten images
  */
-async function fetchKitten() {
+async function fetchKittens() {
     if (isLoading) return;
     
     isLoading = true;
     showAnotherBtn.disabled = true;
-    showLoader();
+    showAllLoaders();
     
     try {
         const response = await fetch(CAT_API_URL);
         
         if (!response.ok) {
-            throw new Error('Failed to fetch kitten');
+            throw new Error('Failed to fetch kittens');
         }
         
         const data = await response.json();
         
-        if (data && data.length > 0 && data[0].url) {
-            // Preload the image
-            const img = new Image();
+        if (data && data.length >= 3) {
+            // Track how many images have loaded
+            let loadedCount = 0;
             
-            img.onload = () => {
-                kittenImage.src = data[0].url;
-                kittenImage.alt = 'An adorable kitten';
-                hideLoader();
-                updateCounter();
-                displayFact();
-                isLoading = false;
-                showAnotherBtn.disabled = false;
+            // Load all 3 images
+            data.forEach((catData, index) => {
+                if (index >= 3) return; // Only process first 3
                 
-                // Add fade-in animation
-                kittenImage.classList.add('fade-in');
-                setTimeout(() => {
-                    kittenImage.classList.remove('fade-in');
-                }, 500);
-            };
-            
-            img.onerror = () => {
-                throw new Error('Failed to load image');
-            };
-            
-            img.src = data[0].url;
+                const img = new Image();
+                
+                img.onload = () => {
+                    kittenImages[index].src = catData.url;
+                    kittenImages[index].alt = 'An adorable kitten';
+                    hideLoader(index);
+                    
+                    // Add fade-in animation
+                    kittenImages[index].classList.add('fade-in');
+                    setTimeout(() => {
+                        kittenImages[index].classList.remove('fade-in');
+                    }, 500);
+                    
+                    loadedCount++;
+                    
+                    // When all 3 are loaded, update counter and re-enable button
+                    if (loadedCount === 3) {
+                        updateCounter();
+                        displayFact();
+                        isLoading = false;
+                        showAnotherBtn.disabled = false;
+                    }
+                };
+                
+                img.onerror = () => {
+                    // Use fallback for this image
+                    kittenImages[index].src = `https://placekitten.com/${300 + index * 10}/${300 + index * 10}`;
+                    kittenImages[index].alt = 'A cute placeholder kitten';
+                    hideLoader(index);
+                    
+                    loadedCount++;
+                    if (loadedCount === 3) {
+                        isLoading = false;
+                        showAnotherBtn.disabled = false;
+                    }
+                };
+                
+                img.src = catData.url;
+            });
         } else {
-            throw new Error('No kitten found');
+            throw new Error('Not enough kittens found');
         }
     } catch (error) {
-        console.error('Error fetching kitten:', error);
+        console.error('Error fetching kittens:', error);
         
-        // Show error state with a fallback
-        factText.textContent = "Oops! Couldn't fetch a kitten. Please try again! 😿";
-        hideLoader();
+        // Show error state with fallbacks
+        factText.textContent = "Oops! Couldn't fetch kittens. Please try again! 😿";
         
-        // Use a fallback placeholder
-        kittenImage.src = 'https://placekitten.com/400/300';
-        kittenImage.alt = 'A cute placeholder kitten';
+        // Use fallback placeholders for all 3
+        for (let i = 0; i < 3; i++) {
+            kittenImages[i].src = `https://placekitten.com/${300 + i * 20}/${300 + i * 20}`;
+            kittenImages[i].alt = 'A cute placeholder kitten';
+            hideLoader(i);
+        }
         
         isLoading = false;
         showAnotherBtn.disabled = false;
@@ -233,7 +283,7 @@ function init() {
     loadCounter();
     
     // Add click event listener
-    showAnotherBtn.addEventListener('click', fetchKitten);
+    showAnotherBtn.addEventListener('click', fetchKittens);
     
     // Add keyboard support
     document.addEventListener('keydown', (e) => {
@@ -242,12 +292,12 @@ function init() {
                 return; // Let the button handle it
             }
             e.preventDefault();
-            fetchKitten();
+            fetchKittens();
         }
     });
     
-    // Fetch the first kitten
-    fetchKitten();
+    // Fetch the first 3 kittens
+    fetchKittens();
     
     console.log('🐱 Purrfect Kittens initialized! Press Space or click the button for more kittens!');
 }
