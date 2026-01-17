@@ -567,3 +567,424 @@ body {
     outline: 3px solid var(--color-accent);
     outline-offset: 3px;
 }
+
+/* ===================================
+   Feature 5: Breed Information Cards
+   =================================== */
+
+.breed-info {
+    padding: 12px 8px 8px;
+    text-align: center;
+    border-top: 2px dashed var(--color-secondary);
+    margin-top: 10px;
+}
+
+.breed-name {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--color-primary);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.breed-icon {
+    font-size: 1.1rem;
+}
+
+.breed-detail {
+    font-size: 0.8rem;
+    color: var(--color-text);
+    opacity: 0.85;
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    line-height: 1.3;
+}
+
+.detail-icon {
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* Truncate long temperament text */
+.breed-detail:last-child span:last-child {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===================================
+   Buttons Row
+   =================================== */
+
+.buttons-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-btn {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, var(--color-accent) 0%, #7ED99A 100%);
+    color: #2D5A3D;
+    border: none;
+    border-radius: var(--radius-large);
+    padding: 16px 30px;
+    cursor: pointer;
+    box-shadow: var(--shadow-medium);
+    transition: all var(--transition-medium);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quiz-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-hover);
+    background: linear-gradient(135deg, #7ED99A 0%, var(--color-accent) 100%);
+}
+
+.quiz-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.quiz-btn .btn-icon {
+    font-size: 1.2rem;
+}
+
+/* ===================================
+   Feature 6: Quiz Modal
+   =================================== */
+
+.quiz-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-medium);
+}
+
+.quiz-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.quiz-modal {
+    background: var(--color-card);
+    border-radius: var(--radius-large);
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9) translateY(20px);
+    transition: transform var(--transition-medium);
+}
+
+.quiz-modal-overlay.active .quiz-modal {
+    transform: scale(1) translateY(0);
+}
+
+.quiz-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--color-secondary);
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    color: var(--color-text);
+}
+
+.quiz-close-btn:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* Quiz Screens */
+.quiz-screen {
+    text-align: center;
+}
+
+.quiz-screen.hidden {
+    display: none;
+}
+
+/* Quiz Start Screen */
+.quiz-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+.quiz-description {
+    font-size: 1rem;
+    color: var(--color-text);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.quiz-action-btn {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #FF9AAC 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius-large);
+    padding: 15px 35px;
+    cursor: pointer;
+    box-shadow: var(--shadow-medium);
+    transition: all var(--transition-medium);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quiz-action-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-hover);
+}
+
+.quiz-secondary-btn {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    background: var(--color-secondary);
+    color: var(--color-text);
+    border: none;
+    border-radius: var(--radius-medium);
+    padding: 12px 25px;
+    cursor: pointer;
+    transition: all var(--transition-medium);
+}
+
+.quiz-secondary-btn:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+/* Quiz Question Screen */
+.quiz-progress {
+    margin-bottom: 25px;
+}
+
+.quiz-progress-text {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    opacity: 0.8;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.quiz-progress-bar {
+    height: 8px;
+    background: var(--color-secondary);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.quiz-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    border-radius: 10px;
+    transition: width var(--transition-medium);
+    width: 0%;
+}
+
+.quiz-question-text {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--color-text);
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.quiz-option {
+    background: var(--color-secondary);
+    border: 3px solid transparent;
+    border-radius: var(--radius-medium);
+    padding: 15px 20px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+    border-color: var(--color-primary);
+    transform: translateX(5px);
+}
+
+.quiz-option.selected {
+    border-color: var(--color-primary);
+    background: rgba(255, 182, 193, 0.3);
+}
+
+.quiz-option.correct {
+    border-color: #4CAF50;
+    background: rgba(76, 175, 80, 0.2);
+    animation: correctPulse 0.5s ease;
+}
+
+.quiz-option.incorrect {
+    border-color: #F44336;
+    background: rgba(244, 67, 54, 0.2);
+    animation: incorrectShake 0.5s ease;
+}
+
+.quiz-option.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.quiz-score {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    opacity: 0.8;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-secondary);
+}
+
+/* Quiz Results Screen */
+.quiz-results-emoji {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.quiz-results-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.quiz-results-score {
+    font-size: 1.2rem;
+    color: var(--color-text);
+    margin-bottom: 10px;
+}
+
+.quiz-results-message {
+    font-size: 1rem;
+    color: var(--color-text);
+    opacity: 0.8;
+    margin-bottom: 25px;
+}
+
+.quiz-results-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Quiz Animations */
+@keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+@keyframes incorrectShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+/* Confetti Canvas */
+.confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2000;
+}
+
+/* Responsive Quiz */
+@media (max-width: 480px) {
+    .quiz-modal {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .quiz-title {
+        font-size: 1.6rem;
+    }
+    
+    .quiz-question-text {
+        font-size: 1.1rem;
+    }
+    
+    .quiz-option {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+    }
+    
+    .buttons-row {
+        flex-direction: column;
+    }
+    
+    .quiz-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .show-another-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .breed-info {
+        padding: 10px 5px 5px;
+    }
+    
+    .breed-name {
+        font-size: 0.9rem;
+    }
+    
+    .breed-detail {
+        font-size: 0.75rem;
+    }
+}

@@ -285,8 +285,8 @@ Interactive quiz game that tests users on the cat facts they've seen while brows
 |-------|---------|--------|
 | 1 | Core site (3 kittens, facts, design) | ✅ Complete |
 | 2a | Dark Mode Toggle | ✅ Complete |
-| 2b | Breed Information Display | 🎯 Next |
-| 2c | Cat Fact Quiz | 🎯 Next |
+| 2b | Breed Information Display | ✅ Complete |
+| 2c | Cat Fact Quiz | ✅ Complete |
 | 3 | Favorites System | 📋 Planned |
 | 4 | Voting Mode | 📋 Planned |
 | 5 | Social Sharing | 📋 Planned |
