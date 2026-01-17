@@ -177,15 +177,132 @@ purrfect-kittens/
 
 ---
 
-## 📝 Approval
+## 🚀 Phase 2: Feature Additions
 
-**Please review this plan and confirm:**
-- [ ] Features look correct
-- [ ] Design direction is approved
-- [ ] Tech stack is acceptable
-- [ ] Ready to proceed with development
+### Completed ✅
+- [x] **3-Kitten Grid Layout** - Display 3 kittens side-by-side
+- [x] **Dark Mode Toggle** - Sun/moon toggle with localStorage persistence
+
+### Next Up 🎯
+
+#### Feature 5: Breed Information Display
+**Status:** Planned  
+**Priority:** High  
+**Estimated Time:** 30 minutes
+
+**Description:**
+Display breed information below each kitten image when available from TheCatAPI.
+
+**Requirements:**
+- Modify API call to request images with breed data (`has_breeds=true`)
+- Display breed name prominently below each kitten
+- Show additional info: temperament, origin country, lifespan
+- Graceful fallback for images without breed data ("Mystery Kitten!")
+- Styled breed info cards matching the playful design
+
+**Technical Details:**
+- API endpoint: `https://api.thecatapi.com/v1/images/search?has_breeds=1&limit=3`
+- Breed data structure: `image.breeds[0].name`, `.temperament`, `.origin`, `.life_span`
+- May need free API key for breed data access
+
+**UI Mockup:**
+```
+┌─────────────────────┐
+│   [Kitten Image]    │
+├─────────────────────┤
+│ 🐱 British Shorthair│
+│ 📍 United Kingdom   │
+│ 💫 Calm, Gentle     │
+└─────────────────────┘
+```
 
 ---
 
-*Document created: January 16, 2026*
+#### Feature 6: Cat Fact Quiz
+**Status:** Planned  
+**Priority:** High  
+**Estimated Time:** 45 minutes
+
+**Description:**
+Interactive quiz game that tests users on the cat facts they've seen while browsing.
+
+**Requirements:**
+- "Take the Quiz!" button in the UI
+- Quiz modal/overlay with 5-10 questions
+- Multiple choice format (4 options per question)
+- Questions generated from the cat facts database
+- Track score and show results at the end
+- Fun animations for correct/incorrect answers
+- Share quiz results option
+- Track facts user has seen for personalized quizzes
+
+**Question Types:**
+1. **Fill in the blank:** "Cats sleep for about ___% of their lives"
+2. **True/False:** "A cat's nose print is unique like a fingerprint"
+3. **Multiple choice:** "What is a group of cats called?"
+
+**UI Mockup:**
+```
+┌─────────────────────────────────────┐
+│         🧠 Cat Fact Quiz!           │
+│                                     │
+│  Question 3 of 5                    │
+│                                     │
+│  How many hours do cats sleep       │
+│  per day on average?                │
+│                                     │
+│  ┌─────────────────────────────┐    │
+│  │  A) 8-10 hours              │    │
+│  └─────────────────────────────┘    │
+│  ┌─────────────────────────────┐    │
+│  │  B) 13-16 hours ✓           │    │
+│  └─────────────────────────────┘    │
+│  ┌─────────────────────────────┐    │
+│  │  C) 18-20 hours             │    │
+│  └─────────────────────────────┘    │
+│  ┌─────────────────────────────┐    │
+│  │  D) 4-6 hours               │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│  Score: 2/2 correct                 │
+└─────────────────────────────────────┘
+```
+
+**Gamification Elements:**
+- 🏆 Show final score with fun messages:
+  - 5/5: "Purrfect! You're a cat genius! 🎉"
+  - 4/5: "Almost purrfect! 😸"
+  - 3/5: "Not bad, keep learning! 📚"
+  - 0-2/5: "Time to view more kittens! 🐱"
+- Confetti animation on perfect score
+- "Play Again" and "Share Results" buttons
+
+---
+
+## 📋 Updated Roadmap
+
+| Phase | Feature | Status |
+|-------|---------|--------|
+| 1 | Core site (3 kittens, facts, design) | ✅ Complete |
+| 2a | Dark Mode Toggle | ✅ Complete |
+| 2b | Breed Information Display | 🎯 Next |
+| 2c | Cat Fact Quiz | 🎯 Next |
+| 3 | Favorites System | 📋 Planned |
+| 4 | Voting Mode | 📋 Planned |
+| 5 | Social Sharing | 📋 Planned |
+
+---
+
+## 📝 Approval
+
+**Please review this plan and confirm:**
+- [x] Features look correct
+- [x] Design direction is approved
+- [x] Tech stack is acceptable
+- [x] Ready to proceed with development
+
+---
+
+*Document created: January 16, 2026*  
+*Last updated: January 17, 2026*  
 *Project: Purrfect Kittens*

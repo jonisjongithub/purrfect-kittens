@@ -227,20 +227,19 @@ Based on competitive analysis, here are prioritized feature recommendations:
 ## 🚀 Recommended Phase 2 Roadmap
 
 ### Sprint 1 (Week 1): Core Engagement
+- [x] Dark mode toggle ✅ **COMPLETE**
 - [ ] Voting mode (pick the cutest)
 - [ ] Favorites with localStorage
-- [ ] Dark mode toggle
 
-### Sprint 2 (Week 2): Social & Sharing
+### Sprint 2 (Week 2): Education & Gamification
+- [ ] Breed information display 🎯 **UP NEXT**
+- [ ] Cat Fact Quiz 🎯 **UP NEXT**
+- [ ] Daily streak counter
+
+### Sprint 3 (Week 3): Social & Sharing
 - [ ] Social share buttons
 - [ ] Shareable image generation
-- [ ] Breed information display
-
-### Sprint 3 (Week 3): Gamification
-- [ ] Daily streak counter
 - [ ] Achievement badges
-- [ ] Enhanced keyboard shortcuts
-- [ ] Sound effects (optional)
 
 ### Sprint 4 (Week 4): Polish & PWA
 - [ ] PWA setup (offline, install prompt)
