@@ -185,7 +185,7 @@ body {
 /* Fact Container */
 .fact-container {
     width: 100%;
-    max-width: 450px;
+    max-width: 900px;
 }
 
 .fact-card {
@@ -393,7 +393,20 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 768px) {
+    .kittens-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
 @media (max-width: 480px) {
+    .kittens-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        max-width: 300px;
+    }
+    
     .title {
         font-size: 1.8rem;
     }
@@ -454,6 +467,15 @@ body {
 }
 
 .show-another-btn:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.show-another-btn:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+cus:not(:focus-visible) {
     outline: none;
 }
 
